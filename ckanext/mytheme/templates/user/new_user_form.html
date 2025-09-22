@@ -9,9 +9,9 @@
   {% block required_core_fields %}
   {{ form.input("name", id="field-username", label="Kullanıcı Adı", placeholder=_("username"), value=data.name,
   error=errors.name, classes=["control-medium"], is_required=True) }}
-  {{ form.input("fullname", id="field-fullname", label="Tam İsim", placeholder=_("Joe Bloggs"), value=data.fullname,
+  {{ form.input("fullname", id="field-fullname", label="Tam İsim", placeholder="Ahmet Yılmaz", value=data.fullname,
   error=errors.fullname, classes=["control-medium"]) }}
-  {{ form.input("email", id="field-email", label="E Posta", type="email", placeholder=_("joe@example.com"),
+  {{ form.input("email", id="field-email", label="E Posta", type="email", placeholder=_("ahmetyilmaz@ornek.com"),
   value=data.email, error=errors.email, classes=["control-medium"], is_required=True) }}
   {{ form.input("password1", id="field-password", label="Şifre", type="password", placeholder="••••••••",
   value=data.password1, error=errors.password1, classes=["control-medium"], is_required=True) }}
