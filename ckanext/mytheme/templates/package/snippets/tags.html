@@ -1,0 +1,7 @@
+{# Renders tags tags - a list of tag dicts Example: {% snippet
+"package/snippets/tags.html", tags=pkg.tags %} #}
+{% if tags %}
+  <section class="tags description-tag">
+    {% snippet 'snippets/tag_list.html', tags=tags, _class='tag-list' %}
+  </section>
+{% endif %}

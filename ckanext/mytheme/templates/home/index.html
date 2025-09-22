@@ -1,0 +1,73 @@
+{% extends "page.html" %} {% block subtitle %}{{ _("Welcome") }}{% endblock %}
+{% block maintag %}{% endblock %} {% block toolbar %}{% endblock %} {% block
+content %}
+<div class="homepage">
+  <div id="content" class="container">{{ self.flash() }}</div>
+  {% block primary_content %}
+  <div role="main">
+    <div class="main hero">
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="hero-text-wrapper">
+              {% block hero_text %}
+
+              <h1>{{ g.site_title }}</h1>
+              <h2>{{ g.site_description }}</h2>
+
+
+              {% endblock %}
+            </div>
+            {% block search %} {% snippet 'home/snippets/search.html',
+            search_facets=search_facets %} {% endblock %}
+          </div>
+        </div>
+      </div>
+      <div class="hero-information">
+        <div class="hero-info-item">
+          <h1>450+</h1>
+          <span>Veri seti</span>
+        </div>
+        <div class="hero-info-item">
+          <h1>300+</h1>
+          <span>Organizasyon</span>
+        </div>
+        <div class="hero-info-item">
+          <h1>150+</h1>
+          <span>Arama etiketi</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="main module-feeds">
+      <div class="welcome-area-homepage">
+        <span class="welcome-text">Şeffaflığa önem veriyoruz<br> <span class="highlighted-text-homepage">
+            Bizim için değerlisiniz!
+          </span></span>
+        <span class="portal-text">
+          Kocaeli Büyükşehir Belediyesi Açık Veri Portalı'na hoş geldiniz.
+          Kamu kurumlarının ve vatandaşların hizmetine sunduğu açık veri
+          platformudur. Veri setlerine erişim sağlayabilir, analiz edebilir ve
+          kendi projelerinizde kullanabilirsiniz.
+        </span>
+      </div>
+      <div class="col-md-12 promoted-area">
+        {% block promoted %} {% snippet 'home/snippets/promoted.html' %} {%
+        endblock %}
+      </div>
+      <div class="col-md-12 benefits-area">
+        {% block benefits %} {% snippet 'home/snippets/benefits.html' %} {%
+        endblock %}
+      </div>
+
+      <div class="col-md-12 categories-area">
+        {% block categories %} {% snippet 'home/snippets/categories.html' %} {%
+        endblock %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
+{% endblock %}

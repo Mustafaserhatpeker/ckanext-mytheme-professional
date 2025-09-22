@@ -1,0 +1,39 @@
+{% ckan_extends %}
+
+{# Sadece bu sayfada sidebar'ı tamamen kaldır #}
+{% block secondary %}{% endblock %}
+
+{# Wrapper'a no-nav sınıfını ekleyerek tam genişliği garanti et #}
+{% block wrapper_class %} no-nav{% endblock %}
+
+{% block content_primary_nav %}
+<li class="active">
+  <a href="{{ h.url_for('dataset.read', id=pkg.name) }}">
+    <i class="fa fa-sitemap"></i> {{ _('Veri seti') }}
+  </a>
+</li>
+{% endblock %}
+
+{% block toolbar %}
+{{ super() }}
+<div id="dataset-top-panel" class="module module--dataset-top">
+  <div class="module-content container">
+    {% if pkg.organization %}
+    {% set org = h.get_organization(pkg.organization.id) %}
+    {% set _am_following = am_following if am_following is defined else False %}
+
+    {% snippet "organization/snippets/info.html",
+    organization=org,
+    show_nums=false,
+    am_following=_am_following,
+    pkg=pkg
+    %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{# ÖNEMLİ: Ana içerikteki "Additional Info" bölümünü tamamen devre dışı bırak #}
+{% block package_additional_info %}{% endblock %}
+
+{% block package_tags %}{% endblock %}

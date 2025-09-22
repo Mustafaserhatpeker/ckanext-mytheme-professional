@@ -1,0 +1,39 @@
+{# Esnek Additional Info snippet
+- Tercihen pkg_dict üzerinden çalışır (CKAN varsayılanı)
+- İstersen 'extras' ([(key, value), ...]) listesi de geçebilirsin
+#}
+
+{% set _extras =
+(extras if extras is defined and extras)
+or (pkg_dict.extras if pkg_dict is defined and pkg_dict and pkg_dict.extras)
+or []
+%}
+
+{% if _extras %}
+<h3>{{ _('Additional Info') }}</h3>
+<table class="table table-striped table-bordered table-condensed">
+  <thead>
+    <tr>
+      <th scope="col">{{ _('Field') }}</th>
+      <th scope="col">{{ _('Value') }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in _extras %}
+    {# Hem tuple (key, value) hem de dict/obj (key, value) destekle #}
+    {% if item is sequence and item is not string and item|length == 2 %}
+    {% set key = item[0] %}
+    {% set value = item[1] %}
+    {% else %}
+    {% set key = item.key %}
+    {% set value = item.value %}
+    {% endif %}
+
+    <tr rel="dc:relation" resource="_:extra{{ loop.index }}">
+      <th scope="row" class="dataset-label" property="rdfs:label">{{ _(key|e) }}</th>
+      <td class="dataset-details" property="rdf:value">{{ value }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}

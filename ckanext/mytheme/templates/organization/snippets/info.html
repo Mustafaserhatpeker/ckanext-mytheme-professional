@@ -1,0 +1,120 @@
+{% set organization = organization or group %}
+{% set url = h.url_for(organization.type + '.read', id=organization.name) %}
+{% set dataset_type = h.default_package_type() %}
+
+{% block info %}
+<section id="organization-info" class="module module-narrow">
+  <div class="module context-info">
+    <div class="organization-module-content">
+      {% block inner %}
+      {% block image %}
+      <div class="image organization-image">
+        <a href="{{ url }}">
+          <img
+            src="{{ organization.image_display_url or h.url_for_static('/base/images/placeholder-organization.png') }}"
+            width="200" alt="{{ organization.name }}" />
+        </a>
+      </div>
+      {% endblock %}
+
+      {% block heading %}
+      <div class="extra-informations">
+        <div class="heading-content">
+          <h1 class="heading">
+            {{ organization.title or organization.name }}
+            {% if organization.state == 'deleted' %} [{{ _('Deleted') }}] {% endif %}
+          </h1>
+          <p class="description">
+            {{ h.markdown_extract(organization.description, 180) }}
+          </p>
+          {# Lisans ve Etiketler: Page heading içinde #}
+          {% if pkg is defined and pkg %}
+          <div class="dataset-meta-inline">
+            <div class="license-inline">
+              <i class="fa fa-balance-scale" aria-hidden="true"></i>
+              {% snippet "snippets/license.html", pkg_dict=pkg %}
+            </div>
+
+            {% if pkg.tags %}
+            <ul class="tag-list tag-list-ify tag-list-inline">
+              {% for tag in pkg.tags %}
+              <li>
+                <i class="me-1 mt-sm-0 mt-2 fa fa-tags"></i>
+                <a class="tag" href="{{ h.url_for('dataset.search', tags=tag.name) }}">
+
+                  {{ tag.display_name or tag.name }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% endblock %}
+
+          {% block description %}
+          {% if organization.description %}
+
+        </div>
+        {% else %}
+        <p class="empty">
+          {{ h.humanize_entity_type('organization', organization.type, 'no description') or _('There is no description
+          for this organization') }}
+        </p>
+        {% endif %}
+        {% endblock %}
+
+        {% if show_nums %}
+        {% block nums %}
+        {% set num_followers = h.follow_count('group', organization.id) %}
+        <div class="nums">
+          <dl>
+            <dt>
+              {{ h.humanize_entity_type('package', dataset_type, 'facet label') or _('Datasets') }}
+            </dt>
+            <dd>{{ h.SI_number_span(organization.package_count) }}</dd>
+          </dl>
+          <dl>
+            <dt>{{ _('Members') }}</dt>
+            <dd>
+              {% set count = 0 %}
+              {% set helpers = h|dictsort %}
+              {% for k, v in helpers %}
+              {% if k == 'member_count' %}
+              {% set count = h.member_count(organization.id) %}
+              {% endif %}
+              {% endfor %}
+              {{ count }}
+            </dd>
+          </dl>
+        </div>
+        {% endblock %}
+        {% endif %}
+
+        {% block follow %}
+        {% if current_user.is_authenticated %}
+        {% if error_message %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+        {% snippet 'snippets/follow_button.html',
+        am_following=am_following,
+        obj_type='organization',
+        obj_id=organization.id
+        %}
+        {% endif %}
+        {% endblock %}
+
+        {# Additional Info alanı: Lisans/etiketlerden ayrı ve yalnızca pkg varsa #}
+        {% if pkg is defined and pkg %}
+        <div class="module additional-info-module">
+          <div class="additional-content">
+            {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% endblock %} {# end inner #}
+      </div>
+    </div>
+</section>
+{% endblock %}

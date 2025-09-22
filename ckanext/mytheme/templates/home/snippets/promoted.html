@@ -1,0 +1,114 @@
+{% set intro = g.site_intro_text %}
+
+
+  {% block home_image %}
+  <section class="featured usage-guide">
+    <h2 class="media-heading text-center mb-4">
+      {{ _("Adım Adım Kullanım Rehberi") }}
+    </h2>
+
+    <!-- Slider Başlangıcı -->
+    <div id="usageGuideCarousel" class="carousel slide" data-bs-ride="carousel">
+      <!-- Indicators -->
+      
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+  <div class="carousel-inner-content">
+    <div class="carousel-text-content">
+      <h3>İstediğim Veriyi Nasıl Bulabilirim?</h3>
+      <p>
+        Kocaeli Büyükşehir Belediyesi veri portalında ihtiyacınız olan
+        veriye ulaşmak artık çok kolay. Anahtar kelime araması yapabilir,
+        veri kategorilerini inceleyebilir veya veri etiketlerini kullanarak
+        aradığınız bilgilere hızlı bir şekilde ulaşabilirsiniz. Örneğin
+        ulaşım, çevre, altyapı veya sosyal hizmetler gibi alanlarda
+        detaylı veri setlerine birkaç tıkla erişebilirsiniz.
+      </p>
+      <a href="{{ h.url_for('dataset.search') }}" class="btn mt-2">Veri Ara</a>
+    </div>
+    <img class="carousel-inner-image" src="1.png" alt="Veri Ara" />
+  </div>
+</div>
+
+<div class="carousel-item">
+  <div class="carousel-inner-content">
+    <div class="carousel-text-content">
+      <h3>Doğru Veriye Mi Bakıyorum?</h3>
+      <p>
+        İncelediğiniz veri setinin güvenilir ve güncel olduğundan emin olun.
+        Kocaeli Büyükşehir Belediyesi portalında her veri seti detaylı bir
+        açıklama, veri kaynağı ve kullanım bilgisi ile birlikte sunulur.
+        Böylece verinin kapsamını, hangi dönemi kapsadığını ve hangi formatta
+        indirilebileceğini kolayca kontrol edebilirsiniz. Veri görselleştirmeleri
+        ile veri setinin içeriğini önizlemek de mümkün.
+      </p>
+      <a href="{{ h.url_for('dataset.search') }}" class="btn mt-2">Veri Setlerini Gör</a>
+    </div>
+    <img class="carousel-inner-image" src="2.png" alt="Veri İncele" />
+  </div>
+</div>
+
+<div class="carousel-item">
+  <div class="carousel-inner-content">
+    <div class="carousel-text-content">
+      <h3>Veriyi İndirebilir Miyim? Hangi Formatlarda İndirebilirim?</h3>
+      <p>
+        Portalda yer alan veri setlerini kendi projelerinizde veya analizlerinizde
+        kullanabilmeniz için çeşitli formatlarda indirebilirsiniz. CSV, JSON, GEOJSON,
+        PDF, fotoğraf ve diğer formatlar sayesinde hem görsel analizler hem de
+        istatistiksel çalışmalar yapabilirsiniz. İndirilen veriler, Kocaeli
+        Büyükşehir Belediyesi’nin güncel ve doğrulanmış kaynaklarından sağlanmaktadır.
+      </p>
+      <a href="{{ h.url_for('dataset.search') }}" class="btn mt-2">Veriyi İndir</a>
+    </div>
+    <img class="carousel-inner-image" src="3.png" alt="Veriyi İndir" />
+  </div>
+</div>
+
+<div class="carousel-item">
+  <div class="carousel-inner-content">
+    <div class="carousel-text-content">
+      <h3>İstediğim Veri Seti Yok, Nasıl Talep Edebilirim?</h3>
+      <p>
+        Eğer portalda aradığınız veri setini bulamıyorsanız, Kocaeli Büyükşehir
+        Belediyesi veri talep formunu kullanarak istediğiniz veriyi talep edebilirsiniz.
+        Talep formu sayesinde ihtiyaç duyduğunuz bilgiyi belediyeye iletebilir,
+        veri setinin eklenmesi veya paylaşılması sürecini başlatabilirsiniz.
+        Bu sayede topluluk olarak veri erişimini daha etkili bir şekilde artırabilirsiniz.
+      </p>
+      <a href="{{ h.url_for('dataset.search') }}" class="btn mt-2">Veri Talep Et</a>
+    </div>
+    <img class="carousel-inner-image" src="4.png" alt="Veriyi İndir" />
+  </div>
+</div>
+
+      </div>
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#usageGuideCarousel"
+          data-bs-slide-to="0"
+          class="active"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#usageGuideCarousel"
+          data-bs-slide-to="1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#usageGuideCarousel"
+          data-bs-slide-to="2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#usageGuideCarousel"
+          data-bs-slide-to="3"
+        ></button>
+      </div>
+    </div>
+    <!-- Slider Sonu -->
+  </section>
+  {% endblock %}
+

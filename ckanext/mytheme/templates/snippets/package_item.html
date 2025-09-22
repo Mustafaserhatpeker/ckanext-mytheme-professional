@@ -1,0 +1,89 @@
+{#
+Displays a single of dataset.
+
+package - A package to display.
+item_class - The class name to use on the list item.
+hide_resources - If true hides the resources (default: false).
+
+Example:
+
+{% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+
+#}
+{% set title = package.title or package.name %}
+{% set notes = h.markdown_extract(package.notes, extract_length=180) %}
+
+{% block package_item %}
+<li class="{{ item_class or " dataset-item" }}">
+  {% block content %}
+  <div class="dataset-content">
+    {% block heading %}
+    <h2 class="dataset-heading">
+      {% block heading_private %}
+      {% if package.private %}
+      <span class="dataset-private badge bg-secondary">
+        <i class="fa fa-lock"></i>
+        {{ _('Private') }}
+      </span>
+      {% endif %}
+      {% endblock %}
+      {% block heading_title %}
+      <a href="{{ h.url_for('%s.read' % package.type, id=package.name) }}" title="{{ title }}">
+        {{ title|truncate(80) }}
+      </a>
+      {% endblock %}
+      {% block heading_meta %}
+      {% if package.get('state', '').startswith('draft') %}
+      <span class="badge bg-info">{{ _('Draft') }}</span>
+      {% elif package.get('state', '').startswith('deleted') %}
+      <span class="badge bg-danger">{{ _('Deleted') }}</span>
+      {% endif %}
+      {% endblock %}
+    </h2>
+    {% endblock %}
+    {% block notes %}
+    {% if notes %}
+    <div>{{ notes|urlize }}</div>
+    {% else %}
+    <p class="empty">
+      {{ h.humanize_entity_type('package', package.type, 'no description') or _("There is no description for this
+      dataset") }}
+    </p>
+    {% endif %}
+    {% endblock %}
+  </div>
+  {% block resources %}
+  {% if package.resources and not hide_resources %}
+  {% block resources_outer %}
+  <ul class="dataset-resources list-unstyled">
+    {% block resources_inner %}
+    {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+    <li>
+      <a href="{{ h.url_for(package.type ~ '.read', id=package.name) }}" class="badge badge-default"
+        data-format="{{ resource.lower() }}">
+        {{ resource }}
+      </a>
+    </li>
+    {% endfor %}
+    {% endblock %}
+  </ul>
+  {% endblock %}
+  {% endif %}
+  {% endblock %}
+  <div class="dataset-arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+      <path fill="#fff" d="M13.4697 17.9697C13.1768 
+            18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 
+            19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 
+            13.2374C21.0066 12.554 21.0066 11.446 20.3232 
+            10.7626L14.5303 4.96967C14.2374 4.67678 13.7626 
+            4.67678 13.4697 4.96967C13.1768 5.26256 13.1768 
+            5.73744 13.4697 6.03033L18.6893 11.25H4C3.58579 
+            11.25 3.25 11.5858 3.25 12C3.25 12.4142 3.58579 
+            12.75 4 12.75H18.6893L13.4697 17.9697Z">
+      </path>
+    </svg>
+  </div>
+  {% endblock %}
+</li>
+{% endblock %}

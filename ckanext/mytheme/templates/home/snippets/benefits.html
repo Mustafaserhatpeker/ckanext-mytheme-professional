@@ -1,0 +1,91 @@
+{% set intro = g.site_intro_text %}
+
+<div class="module-benefits card box">
+  {% block home_image %}
+  <section class="featured usage-guide">
+    <h2 class="media-heading text-center mb-4">Neler Keşfedebilirsiniz?</h2>
+    <div class="row home-about-cards">
+      <!-- Veri İsteği -->
+      <div class="e-card playing">
+        <div class="image"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="infotop">
+          <i class="fa fa-database" style="font-size: 40px; color: white"></i
+          ><br />
+          VERİ İSTEĞİ
+          <div class="name">
+            Ulaşmak istediğiniz veriyi bulamadınız mı? Veri isteğinde bulunarak
+            istediğiniz veriyi elde edin.
+          </div>
+        </div>
+      </div>
+
+      <!-- Veri Setlerini Keşfet -->
+      <div class="e-card playing">
+        <div class="image"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="infotop">
+          <i class="fa fa-search" style="font-size: 40px; color: white"></i
+          ><br />
+          VERİ SETLERİNİ KEŞFET
+          <div class="name">
+            Mevcut veri setlerini kategorilere göre inceleyin ve ilginizi
+            çekenleri indirin.
+          </div>
+        </div>
+      </div>
+
+      <!-- API Kullanımı -->
+      <div class="e-card playing">
+        <div class="image"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="infotop">
+          <i class="fa fa-plug" style="font-size: 40px; color: white"></i><br />
+          API KULLANIMI
+          <div class="name">
+            Verileri kendi uygulamalarınıza entegre etmek için API
+            dokümantasyonunu inceleyin.
+          </div>
+        </div>
+      </div>
+      <div class="e-card playing">
+        <div class="image"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="infotop">
+          <i class="fa fa-users" style="font-size: 40px; color: white"></i><br />
+          ORGANİZASYONLARI KEŞFET
+          <div class="name">
+            Veri setlerini yayınlayan organizasyonları inceleyin ve daha fazla
+            bilgi edinin.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+</div>
+
+<style>
+  .usage-guide i {
+    transition: transform 0.2s ease;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .usage-guide i:hover {
+    transform: scale(1.1);
+  }
+  .infotop strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 16px;
+    color: white;
+  }
+</style>

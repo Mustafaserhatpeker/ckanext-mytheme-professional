@@ -1,0 +1,134 @@
+<section class="additional-info">
+  <h3>{{ _('Ek Bilgiler') }}</h3>
+  <div class="info-cards">
+    {% if pkg_dict.url %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-link"></i></div>
+            <h4>{{ _('Kaynak') }}</h4>
+          </div>
+          <div class="info-content">
+            {% if h.is_url(pkg_dict.url) %}
+              <a href="{{ pkg_dict.url }}" target="_blank">{{ pkg_dict.url }}</a>
+            {% else %}
+              <p>{{ pkg_dict.url }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if pkg_dict.author_email or pkg_dict.author %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-user"></i></div>
+            <h4>{{ _('Yazar') }}</h4>
+          </div>
+          <div class="info-content">
+            <p>
+              {% if pkg_dict.author_email %}{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}{% else %}{{ pkg_dict.author }}{% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if pkg_dict.maintainer_email or pkg_dict.maintainer %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-tools"></i></div>
+            <h4>{{ _('Bakımcı') }}</h4>
+          </div>
+          <div class="info-content">
+            <p>
+              {% if pkg_dict.maintainer_email %}
+                {{
+                  h.mail_to(email_address=pkg_dict.maintainer_email,
+                  name=pkg_dict.maintainer)
+                }}
+              {% else %}
+                {{ pkg_dict.maintainer }}
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if pkg_dict.version %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-code-branch"></i></div>
+            <h4>{{ _('Versiyon') }}</h4>
+          </div>
+          <div class="info-content">
+            <p>{{ pkg_dict.version }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if h.check_access('package_update', {'id':pkg_dict.id}) %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+            <h4>{{ _('Durum') }}</h4>
+          </div>
+          <div class="info-content">
+            <p>{{ _(pkg_dict.state) }}</p>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if pkg_dict.metadata_modified %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-calendar-day"></i></div>
+            <h4>{{ _('Son Güncelleme') }}</h4>
+          </div>
+          <div class="info-content">
+            {%
+              snippet 'snippets/local_friendly_datetime.html',
+              datetime_obj=pkg_dict.metadata_modified
+            %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if pkg_dict.metadata_created %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-calendar-plus"></i></div>
+            <h4>{{ _('Oluşturulma Tarihi') }}</h4>
+          </div>
+          <div class="info-content">
+            {%
+              snippet 'snippets/local_friendly_datetime.html',
+              datetime_obj=pkg_dict.metadata_created
+            %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% for extra in h.sorted_extras(pkg_dict.extras) %}
+      {%
+        set key,
+        value = extra
+      %}
+      <div class="info-card">
+        <div class="info-card-content">
+          <div class="info-header">
+            <div class="info-icon"><i class="fas fa-tag"></i></div>
+            <h4>{{ _(key|e) }}</h4>
+          </div>
+          <div class="info-content">
+            <p>{{ value }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

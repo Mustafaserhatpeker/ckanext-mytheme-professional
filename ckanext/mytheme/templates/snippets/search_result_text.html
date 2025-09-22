@@ -1,0 +1,49 @@
+{# Arama sonuç metni - Türkçe #}
+{% if type == 'dataset' %}
+{% set text_query = ungettext('"{query}" için {number} veri seti bulundu', '"{query}" için {number} veri seti bulundu',
+count) %}
+{% set text_query_none = _('"{query}" için veri seti bulunamadı') %}
+{% set text_no_query = ungettext('{number} veri seti bulundu', '{number} veri seti bulundu', count) %}
+{% set text_no_query_none = _('Hiç veri seti bulunamadı') %}
+
+{% elif type == 'group' %}
+{% set text_query = ungettext('"{query}" için {number} grup bulundu', '"{query}" için {number} grup bulundu', count) %}
+{% set text_query_none = _('"{query}" için grup bulunamadı') %}
+{% set text_no_query = ungettext('{number} grup bulundu', '{number} grup bulundu', count) %}
+{% set text_no_query_none = _('Hiç grup bulunamadı') %}
+
+{% elif type == 'organization' %}
+{% set text_query = ungettext('"{query}" için {number} kuruluş bulundu', '"{query}" için {number} kuruluş bulundu',
+count) %}
+{% set text_query_none = _('"{query}" için kuruluş bulunamadı') %}
+{% set text_no_query = ungettext('{number} kuruluş bulundu', '{number} kuruluş bulundu', count) %}
+{% set text_no_query_none = _('Hiç kuruluş bulunamadı') %}
+
+{% else %}
+{# Genel durum: Türkçe’de sayıdan sonra isim tekil kalır, bu yüzden tekil/çoğul aynı. #}
+{% set text_query_singular = '"{query}" için {number} ' + type + ' bulundu' %}
+{% set text_query_plural = '"{query}" için {number} ' + type + ' bulundu' %}
+{% set text_query_none_plural = '"{query}" için ' + type + ' bulunamadı' %}
+{% set text_no_query_singular = '{number} ' + type + ' bulundu' %}
+{% set text_no_query_plural = '{number} ' + type + ' bulundu' %}
+{% set text_no_query_none_plural = 'Hiç ' + type + ' bulunamadı' %}
+
+{% set text_query = ungettext(text_query_singular, text_query_plural, count) %}
+{% set text_query_none = _(text_query_none_plural) %}
+{% set text_no_query = ungettext(text_no_query_singular, text_no_query_plural, count) %}
+{% set text_no_query_none = _(text_no_query_none_plural) %}
+{%- endif -%}
+
+{% if query %}
+{%- if count -%}
+{{ text_query.format(number=h.localised_number(count), query=query, type=type) }}
+{%- else -%}
+{{ text_query_none.format(query=query, type=type) }}
+{%- endif -%}
+{%- else -%}
+{%- if count -%}
+{{ text_no_query.format(number=h.localised_number(count), type=type) }}
+{%- else -%}
+{{ text_no_query_none.format(type=type) }}
+{%- endif -%}
+{%- endif -%}
