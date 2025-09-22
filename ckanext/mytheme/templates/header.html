@@ -67,7 +67,7 @@
           <div class="d-flex align-items-center">
             <a href="{{ h.url_for('user.login') }}" class="me-2">{{ _('Log in') }}</a>
             {% if h.check_access('user_create') %}
-            <a href="{{ h.url_for('user.register') }}" class="sub">{{ _('Register') }}</a>
+            <a href="{{ h.url_for('user.register') }}" class="sub">Üye Ol</a>
             {% endif %}
           </div>
           {% endif %}

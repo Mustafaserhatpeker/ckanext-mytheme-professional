@@ -1473,11 +1473,11 @@ a {
 
 .sub {
   font-size: large;
-  color: #fff;
+  color: #505050;
 }
 
 .sub:hover {
-  color: #f0f0f0;
+  color: #131313;
 }
 
 .page-header .nav-tabs li a {
