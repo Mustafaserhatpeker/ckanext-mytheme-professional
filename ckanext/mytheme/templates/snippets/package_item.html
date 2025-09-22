@@ -12,9 +12,10 @@ Example:
 #}
 {% set title = package.title or package.name %}
 {% set notes = h.markdown_extract(package.notes, extract_length=180) %}
+{% set item_url = h.url_for('%s.read' % package.type, id=package.name) %}
 
 {% block package_item %}
-<li class="{{ item_class or " dataset-item" }}">
+<li class="{{ (item_class ~ ' ') if item_class else '' }}dataset-item">
   {% block content %}
   <div class="dataset-content">
     {% block heading %}
@@ -28,7 +29,8 @@ Example:
       {% endif %}
       {% endblock %}
       {% block heading_title %}
-      <a href="{{ h.url_for('%s.read' % package.type, id=package.name) }}" title="{{ title }}">
+      <!-- Use a stretched-link to make the whole item clickable without JavaScript -->
+      <a href="{{ item_url }}" class="stretched-link" title="{{ title }}">
         {{ title|truncate(80) }}
       </a>
       {% endblock %}
@@ -59,8 +61,7 @@ Example:
     {% block resources_inner %}
     {% for resource in h.dict_list_reduce(package.resources, 'format') %}
     <li>
-      <a href="{{ h.url_for(package.type ~ '.read', id=package.name) }}" class="badge badge-default"
-        data-format="{{ resource.lower() }}">
+      <a href="{{ item_url }}" class="badge badge-default" data-format="{{ resource.lower() }}">
         {{ resource }}
       </a>
     </li>
@@ -71,7 +72,8 @@ Example:
   {% endif %}
   {% endblock %}
   <div class="dataset-arrow">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="15" width="15" aria-hidden="true"
+      focusable="false">
       <path fill="#fff" d="M13.4697 17.9697C13.1768 
             18.2626 13.1768 18.7374 13.4697 19.0303C13.7626 
             19.3232 14.2374 19.3232 14.5303 19.0303L20.3232 
@@ -86,4 +88,52 @@ Example:
   </div>
   {% endblock %}
 </li>
+
+<style>
+  /* Make the entire list item clickable via the title link (no JS) */
+  .dataset-item {
+    position: relative;
+    /* required for stretched area */
+  }
+
+  /* Bootstrap-like stretched-link behavior (works even if Bootstrap utility is not present) */
+  .stretched-link {
+    position: static;
+    /* ensure the ::after positions to the nearest positioned ancestor (the li) */
+  }
+
+  /* Create an invisible overlay that stretches to the parent (li.dataset-item) */
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* top:0 right:0 bottom:0 left:0 */
+    /* Keep it visually invisible */
+    background: transparent;
+  }
+
+  /* Ensure other interactive elements remain clickable above the stretched area */
+  .dataset-item a:not(.stretched-link),
+  .dataset-item button,
+  .dataset-item input,
+  .dataset-item select,
+  .dataset-item textarea {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Optional: cursor and focus styles for better UX */
+  .dataset-item {
+    cursor: pointer;
+  }
+
+  .dataset-item .stretched-link:focus {
+    outline: none;
+  }
+
+  .dataset-item .dataset-heading a.stretched-link:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+  }
+</style>
 {% endblock %}
